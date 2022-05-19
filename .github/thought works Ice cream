@@ -1,0 +1,189 @@
+class Price:
+    amount: float
+    def __init__(self,amt: float):
+        self.amount= amt
+    def set_amount(self, amt: float):
+        self.amount= amt
+    def get_Amount(self):
+        return self.amount
+        
+class ICFlavor(Price):
+    frname: str
+    def __init__(self,Frname:str, Amt: float):
+        self.frname= Frname
+        self.set_amount(Amt)
+    def get_Name(self):
+        return self.frname
+        
+class ICType(Price) :
+    tyname: str
+    def __init__(self,Tyname: str, Amt: float):
+        self.tyname= Tyname
+        self.set_amount(Amt)
+    def get_Name(self):
+        return self.tyname
+        
+class ICTopping(Price) :
+    tgname: str
+    def __init__(self,Tgname: str, Amt: float):
+        self.tgname= Tgname
+        self.set_amount(Amt)
+        
+    def get_Name(self):
+        return self.tgname
+        
+class Shop:
+    flavors=[]
+    types=[]
+    toppings=[]
+    flavor_choice= int
+    type_choice=int
+    topping_choice=int
+    quantity= int
+    bill_amount= Price
+    
+    def prepareTheShop(self):
+        self.flavors.append(ICFlavor("vanilla",10))
+        self.flavors.append(ICFlavor("strawberry",20))
+        self.flavors.append(ICFlavor("chocolate",30))
+        
+        self.types.append(ICType("cup",10))
+        self.types.append(ICType("cone",20))
+        self.types.append(ICType("stick",30))
+        
+        self.toppings.append(ICTopping("oreo",5))
+        self.toppings.append(ICTopping("fruits",10))
+        self.toppings.append(ICTopping("nuts",15))
+        self.toppings.append(ICTopping("chocos",20))
+        
+    def displayFlavorMenu(self):
+        
+        print("----------    WELCOME TO ICY WORLD    ---------")
+        print("-----------------------------------------------")
+        print("              Ice Cream Flavors")
+        print("-----------------------------------------------\n")
+        
+        flavor_count = 1
+        if len(self.flavors)>0:
+            for flavor in self.flavors:
+                print(flavor_count,")",flavor.get_Name(),"[ Rs .",flavor.get_Amount(),"]")
+                flavor_count+=1
+        else:
+            print("There are no flavors available !!")
+            
+    def askFlavorChoice(self):
+        return(int(input("What flavor would you like to taste!!")))
+        
+    def checkFlavorChoiceValidity(self,Flavor_choice: int):
+        if Flavor_choice> len(self.flavors) or Flavor_choice <=0:
+            print("Invalid Choice! please choose the correct one")
+            self.checkFlavorChoiceValidity(self.askFlavorChoice())
+            
+        else:
+            self.flavor_choice= Flavor_choice
+        
+        print("-----------------------------------------------")
+        print("\nyou have chosen",self.flavors[self.flavor_choice-1].get_Name(),"flavor!!\n\n")
+        
+    def displayTypeMenu(self):
+        
+        print("                Ice Cream Types                ")
+        print("-----------------------------------------------")
+        type_count=1
+        
+        if len(self.types)>0:
+            for ttype in self.types:
+                print(type_count,")",ttype.get_Name(),"[ Rs .",ttype.get_Amount(),"]")
+                type_count+=1
+        else:
+            print("There are no types available!!")
+    def askTypeChoice(self):
+        return(int(input("Which type  would you like!!")))
+    
+    def checkTypeChoiceValidity(self,Type_choice: float):
+        if Type_choice>len(self.types) or Type_choice<=0:
+            print("Invalid choice!! please choose correct choice!")
+            self.checkTypeChoiceValidity(self.askTypeChoice())
+            
+        else:
+            self.type_choice= Type_choice
+            
+        print("You have chosen",self.types[self.type_choice-1].get_Name(),"type icecream!!\n\n")  
+        
+    def displayToppingMenu(self):
+        
+         print("                Ice Cream Toppings             ")
+         print("-----------------------------------------------")
+         top_count=1
+         if len(self.toppings)>0:
+             for top in self.toppings:
+                 print(top_count,")",top.get_Name(),"[ Rs .",top.get_Amount(),"]")
+                 top_count+=1
+         else:
+            print("sorry!!No toppings available!!")
+            
+    def askToppingChoice(self):
+        return(int(input("what topping would you like!!")))
+                 
+    def checkToppingChoiceValidity(self,Topping_choice: int):
+        
+        if Topping_choice>len(self.toppings) or Topping_choice<=0:
+            print("Invalid Choice!!please choose correct one !!")
+            self.checkToppingChoiceValidity(self.askToppingChoice())
+        else:
+            self.topping_choice= Topping_choice
+            
+        print("Wow!! You have chosen",self.toppings[self.topping_choice-1].get_Name(),"topping on Icecream!!")  
+    def displayQuantityMenu(self):
+        print("\n-----------------------------------------------")
+        print("              Ice Cream Quantity")
+        print("-----------------------------------------------\n")
+        print("Icecream Flavor :",self.flavors[self.flavor_choice-1].get_Name())
+        print("Icecream Types :",self.types[self.type_choice-1].get_Name())
+        print("Topping :",self.toppings[self.topping_choice-1].get_Name())
+    def askQuantity(self):
+        return(int(input("How many Icecreams do u want : ")))
+        
+    def quantityCheck(self,Quantity: int):
+        if Quantity <=0:
+            print("Invalid Quantity !please choose again")
+            self.quantityCheck(self.askQuantity())
+        else:
+            self.quantity= Quantity
+    
+    def billCalculate(self):
+        flavor_bill=self.flavors[self.flavor_choice-1].get_Amount()
+        type_bill=self.types[self.type_choice-1].get_Amount()
+        top_bill=self.toppings[self.topping_choice-1].get_Amount()
+        amt = (flavor_bill+type_bill+top_bill)*self.quantity
+        self.bill_amount= Price(round(amt,2))
+        
+    def showBill(self):
+        print("\n-----------------------------------------------")
+        print("                     BILL ")
+        print("-----------------------------------------------\n")
+        print("Ice cream flavor :",self.flavors[self.flavor_choice-1].get_Name())
+        print("Ice cream flavor price :",self.flavors[self.flavor_choice-1].get_Amount())
+        print("Ice cream Type :",self.types[self.type_choice-1].get_Name())
+        print("Ice cream Type price :",self.types[self.type_choice-1].get_Amount())
+        print("Toppings :",self.toppings[self.topping_choice-1].get_Name())
+        print("Toppings price :",self.toppings[self.topping_choice-1].get_Amount())
+        print("Amount to pay =","(",self.flavors[self.flavor_choice-1].get_Amount(),"+",self.types[self.type_choice-1].get_Amount(),"+",self.toppings[self.topping_choice-1].get_Amount(),")")
+        print("Rs :",self.bill_amount.get_Amount())
+        print("-----------------Thank You !!---------------------")
+shopObject = Shop()
+shopObject.prepareTheShop()
+
+shopObject.displayFlavorMenu()
+shopObject.checkFlavorChoiceValidity(shopObject.askFlavorChoice())
+
+shopObject.displayTypeMenu()
+shopObject.checkTypeChoiceValidity(shopObject.askTypeChoice())
+
+shopObject.displayToppingMenu()
+shopObject.checkToppingChoiceValidity(shopObject.askToppingChoice())  
+shopObject.displayQuantityMenu()
+shopObject.quantityCheck(shopObject.askQuantity())
+
+shopObject.billCalculate()
+shopObject.showBill()
