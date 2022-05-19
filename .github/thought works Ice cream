@@ -168,7 +168,7 @@ class Shop:
         print("Ice cream Type price :",self.types[self.type_choice-1].get_Amount())
         print("Toppings :",self.toppings[self.topping_choice-1].get_Name())
         print("Toppings price :",self.toppings[self.topping_choice-1].get_Amount())
-        print("Amount to pay =","(",self.flavors[self.flavor_choice-1].get_Amount(),"+",self.types[self.type_choice-1].get_Amount(),"+",self.toppings[self.topping_choice-1].get_Amount(),")")
+        print("Amount to pay =","(",self.flavors[self.flavor_choice-1].get_Amount(),"+",self.types[self.type_choice-1].get_Amount(),"+",self.toppings[self.topping_choice-1].get_Amount(),")*",self.quantity)
         print("Rs :",self.bill_amount.get_Amount())
         print("-----------------Thank You !!---------------------")
 shopObject = Shop()
